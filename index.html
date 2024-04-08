@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<title>テキストセッションログリーダー</title>
+	<link rel="shortcut icon" type="image/x-icon" href="./image/favicons/icon.png">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body onload="onloadEvent()">
+	<!-- メインコンテンツ -->
+	<div class="contents-area p-3 d-flex flex-column gap-3">
+		<div class="header-area p-2 d-flex justify-content-between align-items-end">
+			<div class="f-20b">テキストセッションログリーダー</div>
+			<div class="f-14m">ver.1.2</div>
+		</div>
+		<div class="main-area d-flex gap-2">
+			<!-- 左エリア -->
+			<div class="left-area">
+				<div class="left-area-top">
+					<form class="d-flex flex-column gap-3">
+						<div>
+							<div>LINEから出力されたテキストログファイルを読み込むと、中身を解析していい感じに読みやすくしてくれます。</div>
+							<div class="f-12m">※GM/PLのチェックは現状機能未実装</div>
+						</div>
+						<div class="d-flex flex-column">
+							<div class="heading-1 f-18b">ファイル読み込み</div>
+							<div class="d-flex px-3">
+								<input type="file" id="fileInput" accept="text/plain">
+							</div>
+						</div>
+						<div class="d-flex flex-column">
+							<div class="heading-1 f-18b">オプション</div>
+							<div class="d-flex flex-column gap-2 px-3">
+								<div class="option-h f-14b">●メンバー設定</div>
+								<div class="d-flex flex-column px-3">
+									<table class="member-setting-table f-14m" id="memberTable">
+										<colgroup>
+											<col width="40px">
+											<col>
+											<col width="130px">
+											<col width="32px">
+											<col width="32px">
+										</colgroup>
+										<tr>
+											<th>No.</th>
+											<th class="text-left">メンバー名</th>
+											<th>カラー</th>
+											<th>GM</th>
+											<th>PL</th>
+										</tr>
+										<tr>
+											<td class="text-center">1</td>
+											<td id="memberName1"></td>
+											<td class="text-center">
+												<div class="d-flex align-items-center gap-1 justify-content-center">
+													<div class="color-sample" id="colorBox1" style="background-color: #ffc1c1;"></div>
+													<select id="colorInput1" class="color-select" onchange="changeColor(this, 1);"></select>
+												</div>
+											</td>
+											<td class="text-center"><input type="radio" name="gmpl1" value="0" checked onclick="onclickGMPL(1, this)"></td>
+											<td class="text-center"><input type="radio" name="gmpl1" value="1" onclick="onclickGMPL(1, this)"></td>
+										</tr>
+										<tr>
+											<td class="text-center">2</td>
+											<td id="memberName2"></td>
+											<td class="text-center">
+												<div class="d-flex align-items-center gap-1 justify-content-center">
+													<div class="color-sample" id="colorBox2" style="background-color: #66e6ff;"></div>
+													<select id="colorInput2" class="color-select" onchange="changeColor(this, 2);"></select>
+												</div>
+											</td>
+											<td class="text-center"><input type="radio" name="gmpl2" value="0" onclick="onclickGMPL(2, this)"></td>
+											<td class="text-center"><input type="radio" name="gmpl2" value="1" checked onclick="onclickGMPL(2, this)"></td>
+										</tr>
+										<tr>
+											<td class="text-center">3</td>
+											<td id="memberName3"></td>
+											<td class="text-center">
+												<div class="d-flex align-items-center gap-1 justify-content-center">
+													<div class="color-sample" id="colorBox3" style="background-color: #dcffd8;"></div>
+													<select id="colorInput3" class="color-select" onchange="changeColor(this, 3);"></select>
+												</div>
+											</td>
+											<td class="text-center"><input type="radio" name="gmpl3" value="0" onclick="onclickGMPL(3, this)"></td>
+											<td class="text-center"><input type="radio" name="gmpl3" value="1" checked onclick="onclickGMPL(3, this)"></td>
+										</tr>
+										<tr>
+											<td class="text-center">4</td>
+											<td id="memberName4"></td>
+											<td class="text-center">
+												<div class="d-flex align-items-center gap-1 justify-content-center">
+													<div class="color-sample" id="colorBox4" style="background-color: #b4f5ec;"></div>
+													<select id="colorInput4" class="color-select" onchange="changeColor(this, 4);"></select>
+												</div>
+											</td>
+											<td class="text-center"><input type="radio" name="gmpl4" value="0" onclick="onclickGMPL(4, this)"></td>
+											<td class="text-center"><input type="radio" name="gmpl4" value="1" checked onclick="onclickGMPL(4, this)"></td>
+										</tr>
+										<tr>
+											<td class="text-center">5</td>
+											<td id="memberName5"></td>
+											<td class="text-center">
+												<div class="d-flex align-items-center gap-1 justify-content-center">
+													<div class="color-sample" id="colorBox5" style="background-color: #fcc4f2;"></div>
+													<select id="colorInput5" class="color-select" onchange="changeColor(this, 5);"></select>
+												</div>
+											</td>
+											<td class="text-center"><input type="radio" name="gmpl5" value="0" onclick="onclickGMPL(5, this)"></td>
+											<td class="text-center"><input type="radio" name="gmpl5" value="1" checked onclick="onclickGMPL(5, this)"></td>
+										</tr>
+									</table>
+									<div class="member-add-btn text-center" onclick="addMember();">＋メンバーを追加</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="left-area-bottom">
+					<div class="heading-1 f-18b">更新履歴</div>
+					<div class="update-frame p-2">
+						<div class="update-content d-flex gap-3">
+							<div>2024/01/22</div>
+							<div>ver.1.2</div>
+							<div>ファイルの拡張子を指定<br>エラーハンドリングを追加<br>背景色を変更<br>faviconを追加<br>細かいデザインの変更</div>
+						</div>
+						<div class="update-content d-flex gap-3">
+							<div>2023/12/24</div>
+							<div>ver.1.1</div>
+							<div>メンバー追加機能の実装<br>カラー設定を選択式に変更<br>カラーに紫、オレンジを追加<br>ファイル読み込み後のカラー変更に対応<br>細かいデザインの変更</div>
+						</div>
+						<div class="update-content d-flex gap-3">
+							<div>2023/12/23</div>
+							<div>ver.1.0</div>
+							<div>作成</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 右エリア -->
+			<div class="right-area">
+				<div class="d-flex justify-content-between">
+					<div class="f-18b p-2" id="fileName">&nbsp;</div>
+				</div>
+				<div class="log-frame p-3 d-flex flex-column gap-3" id="logFrame"></div>
+			</div>
+		</div>
+	</div>
+	<!-- アラート系 -->
+	<div id="alert_bg" class="d-none"></div>
+	<div id="alert_area" class="d-none align-items-center">
+		<div id="alert_message" class="f-16b">アラートメッセージ</div>
+	</div>
+
+	<script>
+		const fileInput = document.getElementById('fileInput'); //テキストファイルinput
+		const logFrame = document.getElementById('logFrame'); //ログ展開エリア
+
+		const newLine = '<br>'; //改行タグ
+		const colorMax = 8; //カラー数
+
+		var nameAry = []; //メンバー名配列
+		var memberLength = 5; //初期表示時のメンバー数
+
+		//HTML読み込み時初期設定
+		function onloadEvent() {
+			//カラーの初期設定
+			var colorSelect = document.getElementsByClassName('color-select');
+			for(var i = 0; i < colorSelect.length; i++) {
+
+				//selected付与
+				var colorList = [];
+				for(var j = 0; j < colorMax; j++) {
+					if(j == i+1) {
+						colorList.push('selected');
+					} else {
+						colorList.push('');
+					}
+				}
+				addSelectOption(colorList, colorSelect[i]);
+			}
+		}
+
+		//セレクトボックスに項目追加
+		function addSelectOption(colorList, obj) {
+			var colors = '\
+					<option value="#ffffff" ' + colorList[0] + '>白</option>\
+					<option value="#ffc1c1" ' + colorList[1] + '>赤</option>\
+					<option value="#66e6ff" ' + colorList[2] + '>青</option>\
+					<option value="#dcffd8" ' + colorList[3] + '>黄</option>\
+					<option value="#b4f5ec" ' + colorList[4] + '>緑</option>\
+					<option value="#fcc4f2" ' + colorList[5] + '>ピンク</option>\
+					<option value="#d6adfc" ' + colorList[6] + '>紫</option>\
+					<option value="#fddeb6" ' + colorList[7] + '>オレンジ</option>\
+				'
+			obj.insertAdjacentHTML('beforeend', colors);
+		}
+
+		//ファイル読み込み
+		fileInput.addEventListener('change', (e) => {
+			logFrame.innerHTML = ''; //フレームの初期化
+			nameAry = []; //メンバー名配列の初期化
+			const file = e.target.files[0];
+
+			let fileType = file.name.split('.').pop();
+
+			// 拡張子確認
+			if(fileType != 'txt') {
+				alert('テキストファイルを選択してください（.txt）');
+				return;
+			}
+
+			//ファイル名を画面に表示
+			document.getElementById("fileName").innerHTML = file.name;
+
+			const reader = new FileReader();
+
+			reader.onload = () => {
+				const text = edit(reader.result);
+			};
+
+			reader.readAsText(file);
+		});
+
+		//テキストの編集
+		function edit(text) {
+			var date; //時刻
+			var name; //プレイヤー名
+			var comment; //発言
+			var divContent //一行
+
+			//改行で分割
+			var br = text.split(/\r\n|\n|\r/);
+			for (var i = 0; i < br.length; i++) {
+
+				//タブで分割（0：時刻、1：プレイヤー名、2：発言）
+				var tab = br[i].split('\t');
+
+				date = tab[0];
+				name = tab[1];
+				comment = tab[2];
+
+				//今回の文章にundefinedが含まれている場合はスキップ（主に初回）
+				if(date==undefined || name==undefined || comment==undefined) {
+					continue;
+				}
+
+				//次の文章が改行されているか判定
+				var nextComment = 'start!';
+				while(nextComment != 'stop!' && i+1 < br.length){
+					nextComment = nextText(br[i+1].split('\t'));
+					//次の文章が改行文章だった場合、今回のコメントに追加する
+					if(nextComment != 'stop!'){
+						comment = comment + newLine + nextComment;
+						i++;
+					}
+				}
+
+				var plno = nameStrage(name);
+				var colorCode = setColor(plno);
+
+				var classNo = plno + 1;
+
+				divContent = '\
+					<div class="d-flex flex-column div-content-' + classNo + '">\
+						<div class="pl-name f-14b">' + name + '</div>\
+						<div class="d-flex gap-2 align-items-end">\
+							<div class="session-comment f-16m comment-box-' + classNo + '" style="background-color:' + colorCode + ';">' + comment + '</div>\
+							<div class="date f-12m">' + date + '</div>\
+						</div>\
+					</div>'
+
+				logFrame.insertAdjacentHTML('beforeend', divContent);
+			}
+			//メンバー名を表に記載
+			for(var i = 0; i < nameAry.length; i++) {
+				var j = i + 1;
+				var memberName = document.getElementById('memberName' + j);
+				memberName.innerHTML = nameAry[i];
+			}
+		}
+
+		//改行文章を解析
+		function nextText(text) {
+			var returnComment = 'stop!';
+			var flg = false;
+			
+			//次の文章が改行文章かどうかを判定
+			if(text[0]==undefined || text[1]==undefined || text[2]==undefined) {
+				for(var i = 0; i <= 2; i++) {
+					if(text[i]!=undefined) {
+						if(flg==false) {
+							//1回目の場合は「stop!」を削除
+							returnComment = '';
+						} else if(flg==true) {
+							//2回目以降の場合は改行を追加
+							returnComment = returnComment + newLine;
+						}
+						returnComment = returnComment + text[i];
+						flg = true;
+					}
+				}
+			}
+			return returnComment;
+		}
+
+		//名称解析
+		function nameStrage(value) {
+			var nameIndex;
+
+			for (var i = 0; i < nameAry.length; i++) {
+				if(nameAry[i]==value) {
+					//既にリストにいる
+					nameIndex = i;
+					return nameIndex;
+				}
+			}
+			//リストにいない（新規）
+			nameIndex = nameAry.length;
+			nameAry.push(value);
+			return nameIndex;
+		}
+
+		//ログ生成時、カラー指定
+		function setColor(index) {
+			index++;
+			var elm;
+			if(!(document.querySelector('#colorInput' + index))){
+				addMember();
+				var test = 1;
+			}
+			elm = document.querySelector('#colorInput' + index);
+			if(test==1){
+				console.log(elm);
+			}
+			const color = elm.value;
+			
+			return color;
+		}
+
+		//カラー変更（セレクトボックス変更時）
+		function changeColor(obj, memberNo) {
+			var idx = obj.selectedIndex;
+			var colorCode = obj.options[idx].value;
+			var objColorBox = document.getElementById('colorBox' + memberNo);
+
+			//サンプルカラーボックスのスタイル変更
+			objColorBox.style.backgroundColor = colorCode;
+
+			//ログエリアの背景色変更
+			var divContentList = document.getElementsByClassName('comment-box-' + memberNo);
+			for(var i = 0; i < divContentList.length; i++) {
+				divContentList[i].style.backgroundColor = colorCode;
+			}
+		}
+
+		//メンバーを追加
+		function addMember() {
+			memberLength++; //メンバー数を1増加
+			var table = document.getElementById('memberTable');
+
+			var addTr = '\
+				<tr>\
+					<td class="text-center">' + memberLength + '</td>\
+					<td id="memberName' + memberLength + '"></td>\
+					<td class="text-center">\
+						<div class="d-flex align-items-center gap-1 justify-content-center">\
+							<div class="color-sample" id="colorBox' + memberLength + '" style="background-color: #ffffff;"></div>\
+							<select id="colorInput' + memberLength + '" class="color-select" onchange="changeColor(this, ' + memberLength + ');"></select>\
+						</div>\
+					</td>\
+					<td class="text-center"><input type="radio" name="gmpl' + memberLength + '" value="0" onclick="onclickGMPL(' + memberLength + ', this)"></td>\
+					<td class="text-center"><input type="radio" name="gmpl' + memberLength + '" value="1" checked onclick="onclickGMPL(' + memberLength + ', this)"></td>\
+				</tr>'
+
+			table.insertAdjacentHTML('beforeend', addTr);
+
+			//セレクトボックス追加用のカラーリスト設定
+			var colorList = [];
+			for(var i = 0; i < colorMax; i++) {
+				if(i == 0) {
+					colorList.push('selected');
+				} else {
+					colorList.push('');
+				}
+			}
+
+			//セレクトボックス追加
+			var colorSelect = document.getElementById('colorInput' + memberLength);
+			addSelectOption(colorList, colorSelect);
+		}
+
+		//GM・PLの設定（onclick） ※開発中
+		function onclickGMPL(memberNo, checkbox) {
+			var rowNo = memberNo - 1; //生の数字（0～n）
+			var flg = checkbox.value; //0：GM、1：PL
+
+		}
+
+		//GM・PLの設定 ※開発中
+		function setGMPL() {
+			var elm = document.getElementsByClassName('div-content-' + memberNo);
+			for(var i = 0; i < elm.length; i++) {
+
+			}
+		}
+
+		//アラート
+		let alert_bg = document.getElementById('alert_bg');
+		let alertArea = document.getElementById('alert_area');
+		let alertMessage = document.getElementById('alert_message');
+
+		function alert(message) {
+
+			alert_bg.classList.remove('d-none');
+			alert_bg.classList.add('d-block');
+			alertArea.classList.remove('d-none');
+			alertArea.classList.add('d-flex');
+			alertMessage.innerHTML = message;
+
+			alert_bg.animate(
+				[
+					{ opacity: 0 },
+					{ opacity: 0.5 }
+				],
+				{
+					duration: 200,
+					fill: 'forwards'
+				}
+			);
+		}
+
+		//アラート閉じる
+		alert_bg.onclick = function(){
+			alert_bg.animate(
+				[
+					{ opacity: 0.5 },
+					{ opacity: 0 }
+				],
+				{
+					duration: 200,
+					fill: 'forwards'
+				}
+			);
+			alertMessage.innerHTML = '';
+			alert_bg.classList.remove('d-block');
+			alert_bg.classList.add('d-none');
+			alertArea.classList.remove('d-flex');
+			alertArea.classList.add('d-none');
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+body {
+	font-size: 16px;
+	height: calc(100vh - 3rem);
+	overflow: hidden;
+}
+
+.contents-area {
+	height: 100%;
+}
+.header-area {
+	background-color: #fdd5bb;
+	border-radius: 4px;
+}
+.main-area {
+	width: 100%;
+	height: 100%;
+	box-shadow: 10px #000000;
+}
+.left-area {
+	width: 35%;
+}
+.left-area-top {
+	height: 75%;
+}
+.left-area-bottom {
+	height: 25%;
+}
+.right-area {
+	width: 65%;
+	height: 100%;
+}
+.update-frame {
+	height: calc(25vh - 4.5rem);
+	border: 1px solid #000000;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+.update-content {
+	border-bottom: 1px solid #000000;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+.log-frame {
+	height: calc(100vh - 11.5rem);
+	border: 1px solid #000000;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	background-color: #e0edff;
+}
+.option-h {
+	width: 20%;
+}
+.option-d {
+	width: 80%;
+}
+.color-sample {
+	width: 16px;
+	height: 16px;
+	border: 1px solid #000000;
+}
+.session-comment {
+	display: flex;
+	align-items: center;
+	background-color: #dddddd;
+	border-radius: 6px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left: 16px;
+	padding-right: 16px;
+	box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.35);
+	width: fit-content;
+}
+.pl-name {
+	max-width: 300px;
+}
+.member-setting-table {
+	table-layout: fixed;
+	border-collapse: collapse;
+	width: 100%;
+}
+.member-setting-table th,
+.member-setting-table td {
+	border: 1px solid #000000;
+	height: 30px;
+	padding: 0 4px 0 4px;
+}
+.member-setting-table th {
+	background-color: #818181;
+	color: #FFFFFF;
+}
+input.color-text {
+	width: 4rem;
+}
+
+input#fileInput {
+	width: 100%;
+}
+.member-add-btn {
+	cursor: pointer;
+	border: 1px solid #000000;
+	border-top: none !important;
+}
+.member-add-btn:hover {
+	background-color: #eeeeee;
+}
+
+/* アラート */
+#alert_bg {
+	background-color: #000000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: 100;
+}
+
+#alert_message {
+	color: #ffffff;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+	height: 40px;
+	z-index: 500;
+}
+
+/* 共通 */
+.heading-1 {
+	border-left: 6px solid #2138ac;
+	padding-left: 6px;
+	margin-bottom: 4px;
+	line-height: 24px;
+	vertical-align: middle;
+}
+
+.d-none {
+	display: none;
+}
+.d-block {
+	display: block;
+}
+.d-flex {
+	display: flex;
+}
+.flex-column {
+	flex-direction: column;
+}
+.justify-content-center {
+	justify-content: center;
+}
+.justify-content-between {
+	justify-content: space-between;
+}
+.justify-content-end {
+	justify-content: end;
+}
+.align-items-end {
+	align-items: end;
+}
+.align-items-center {
+	align-items: center;
+}
+.text-center {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+
+/* カラー */
+.red {
+	color: #f98866;
+}
+
+/* gap */
+.gap-1 {
+	gap: 0.25rem;
+}
+.gap-2 {
+	gap: 0.5rem;
+}
+.gap-3 {
+	gap: 1rem;
+}
+.gap-4 {
+	gap: 1.5rem;
+}
+.gap-5 {
+	gap: 2rem;
+}
+
+/* padding */
+.p-1 {
+	padding: 0.25rem;
+}
+.p-2 {
+	padding: 0.5rem;
+}
+.p-3 {
+	padding: 1rem;
+}
+.p-4 {
+	padding: 1.5rem;
+}
+.p-5 {
+	padding: 2rem;
+}
+
+.px-1 {
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+}
+.px-2 {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+.px-3 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+.px-4 {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+.px-5 {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+/* margin */
+.ms-auto {
+	margin-left: auto;
+}
+.me-auto {
+	margin-right: auto;
+}
+.mt-auto {
+	margin-top: auto;
+}
+.mb-auto {
+	margin-bottom: auto;
+}
+
+/* フォント */
+.f-12m {
+	font-size: 12px;
+	font-weight: 500;
+}
+.f-14m {
+	font-size: 14px;
+	font-weight: 500;
+}
+.f-16m {
+	font-size: 16px;
+	font-weight: 500;
+}
+.f-18m {
+	font-size: 18px;
+	font-weight: 500;
+}
+.f-20m {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.f-12b {
+	font-size: 12px;
+	font-weight: 800;
+}
+.f-14b {
+	font-size: 14px;
+	font-weight: 800;
+}
+.f-16b {
+	font-size: 16px;
+	font-weight: 800;
+}
+.f-18b {
+	font-size: 18px;
+	font-weight: 800;
+}
+.f-20b {
+	font-size: 20px;
+	font-weight: 800;
+}
